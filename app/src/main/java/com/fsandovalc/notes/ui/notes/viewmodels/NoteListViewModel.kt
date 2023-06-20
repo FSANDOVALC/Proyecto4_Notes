@@ -8,6 +8,7 @@ import com.fsandovalc.notes.data.datasources.LocalNoteDataSource
 import com.fsandovalc.notes.data.repositories.NoteRepositoryImpl
 import com.fsandovalc.notes.domain.models.NoteModel
 import com.fsandovalc.notes.domain.repositories.NoteRepository
+import com.fsandovalc.notes.domain.usecases.AddNotesUseCase
 import com.fsandovalc.notes.domain.usecases.DeleteNotesUseCase
 import com.fsandovalc.notes.domain.usecases.GetNotesUseCase
 
@@ -16,6 +17,8 @@ class NoteListViewModel : ViewModel() {
     private val repository: NoteRepository = NoteRepositoryImpl(dataSource)
     private val getNotesUseCase = GetNotesUseCase(repository)
     private val deleteNotesUseCase = DeleteNotesUseCase(repository)
+    private val addNotesUseCase = AddNotesUseCase(repository)
+
 
     private val _noteListLiveData = MutableLiveData<List<NoteModel>>()
     val noteListLiveData: LiveData<List<NoteModel>>
@@ -37,6 +40,13 @@ class NoteListViewModel : ViewModel() {
         deleteNotesUseCase.execute(id)
         val list = getNotesUseCase.execute()
         Log.i("testDeleteNotes",list.toString())
+        _noteListLiveData.value = list
+    }
+
+    fun addNote(title: String, desc: String, tag: String){
+        addNotesUseCase.execute(title,desc,tag)
+        val list = getNotesUseCase.execute()
+        Log.i("testAddedNotes",list.toString())
         _noteListLiveData.value = list
     }
 }

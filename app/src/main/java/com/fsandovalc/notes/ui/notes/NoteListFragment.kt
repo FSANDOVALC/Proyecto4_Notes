@@ -1,10 +1,12 @@
 package com.fsandovalc.notes.ui.notes
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -55,6 +57,19 @@ class NoteListFragment : Fragment() {
             )
             notesRecyclerView.layoutManager =
                 LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+
+
+            //Enable the add_task_button to change fragment to AddNoteFragment
+            val addTaskButton = view.findViewById<Button>(R.id.add_task_button)
+
+            addTaskButton.setOnClickListener {
+                val addNoteFragment = AddNoteFragment()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, addNoteFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+
         }
     }
 
@@ -65,7 +80,9 @@ class NoteListFragment : Fragment() {
     }
 
     private fun onListItemClicked(noteModel: NoteModel) {
-        Toast.makeText(context, "${noteModel.title} was clicked", Toast.LENGTH_LONG).show()
-        // Todo remove item
+        Toast.makeText(context, "${noteModel.title} was removed from list", Toast.LENGTH_LONG).show()
+        // Remove items from the datasource and refresh view
+        viewModel.deleteNote(noteModel.id)
+        viewModel.onViewReady()
     }
 }

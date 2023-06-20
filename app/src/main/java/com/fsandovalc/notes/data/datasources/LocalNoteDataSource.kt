@@ -1,5 +1,6 @@
 package com.fsandovalc.notes.data.datasources
 
+import android.util.Log
 import com.fsandovalc.notes.data.models.LocalNote
 import com.fsandovalc.notes.data.models.LocalTag
 

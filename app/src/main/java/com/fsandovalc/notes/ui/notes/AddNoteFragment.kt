@@ -37,18 +37,14 @@ class AddNoteFragment : Fragment() {
             val description = descriptionEditText.text.toString()
             val tag = tagEditText.text.toString()
 
-            // Use the retrieved data as needed (e.g., save to a database or perform an action)
-            // Example: listener?.onNoteDataReceived(title, description, tag)
+            // TODO
         }
 
         val backButton = view.findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener {
-            // Perform the fragment transaction to switch to another fragment
-            val noteListFragment = NoteListFragment()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, noteListFragment)
-                .commit()
+            parentFragmentManager.popBackStack() // Pop the back stack to navigate back to the previous fragment
         }
+
     }
 }
 

@@ -66,6 +66,7 @@ class NoteListFragment : Fragment() {
                 val addNoteFragment = AddNoteFragment()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, addNoteFragment)
+                    .addToBackStack(null) // Add to the back stack
                     .commit()
             }
 
@@ -76,11 +77,6 @@ class NoteListFragment : Fragment() {
         viewModel.noteListLiveData.observe(viewLifecycleOwner) { list ->
             adapter.setData(list)
         }
-
-//        viewModel.noteDeletedLiveData.observe(viewLifecycleOwner) { noteId ->
-//            // Update the note list after deleting a note
-//            viewModel.updateNoteList()
-//        }
     }
 
     private fun onListItemClicked(noteModel: NoteModel) {

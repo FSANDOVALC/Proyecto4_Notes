@@ -12,4 +12,6 @@ class DeleteNotesUseCase(
         Log.i("testDelete","${id} was supposed to be removed")
         noteRepository.deleteNote(id)
     }
+
+
 }

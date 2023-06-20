@@ -1,5 +1,6 @@
 package com.fsandovalc.notes.ui.notes.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,11 +22,21 @@ class NoteListViewModel : ViewModel() {
         get() = _noteListLiveData
 
     fun onViewReady() {
+        if (_noteListLiveData.value == null) {
+            loadNotes()
+        }
+    }
+
+    fun loadNotes() {
         val list = getNotesUseCase.execute()
+        Log.i("testLoadNotes", list.toString())
         _noteListLiveData.value = list
     }
 
     fun deleteNote(id: Int) {
         deleteNotesUseCase.execute(id)
+        val list = getNotesUseCase.execute()
+        Log.i("testDeleteNotes",list.toString())
+        _noteListLiveData.value = list
     }
 }

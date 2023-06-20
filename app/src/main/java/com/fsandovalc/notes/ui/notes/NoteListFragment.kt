@@ -1,7 +1,6 @@
 package com.fsandovalc.notes.ui.notes
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +44,7 @@ class NoteListFragment : Fragment() {
         viewModel.onViewReady()
     }
 
+
     private fun initViews(view: View) {
         with(view) {
             notesRecyclerView = findViewById(R.id.notes_list)
@@ -66,7 +66,6 @@ class NoteListFragment : Fragment() {
                 val addNoteFragment = AddNoteFragment()
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, addNoteFragment)
-                    .addToBackStack(null)
                     .commit()
             }
 
@@ -77,12 +76,16 @@ class NoteListFragment : Fragment() {
         viewModel.noteListLiveData.observe(viewLifecycleOwner) { list ->
             adapter.setData(list)
         }
+
+//        viewModel.noteDeletedLiveData.observe(viewLifecycleOwner) { noteId ->
+//            // Update the note list after deleting a note
+//            viewModel.updateNoteList()
+//        }
     }
 
     private fun onListItemClicked(noteModel: NoteModel) {
         Toast.makeText(context, "${noteModel.title} was removed from list", Toast.LENGTH_LONG).show()
         // Remove items from the datasource and refresh view
         viewModel.deleteNote(noteModel.id)
-        viewModel.onViewReady()
     }
 }
